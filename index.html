@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Vercel App</title>
+    <title>Camchat Netlify App</title>
 
     <!-- Site Icon / Favicon -->
     <link rel="icon" type="image/png" href="icon.png">
@@ -14,121 +14,124 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
             margin: 0; 
             padding: 20px; 
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
-            color: white; 
             min-height: 100vh; 
             display: flex; 
             align-items: center; 
             justify-content: center; 
+            color: white;
+
+            /* DESKTOP BACKGROUND */
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(102,126,234,0.85),
+                    rgba(118,75,162,0.85)
+                ),
+                url("bg-desktop.gif");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
         }
-        .page { display: none; max-width: 400px; width: 100%; text-align: center; }
+
+        /* MOBILE BACKGROUND */
+        @media (max-width: 768px) {
+            body {
+                background:
+                    linear-gradient(
+                        135deg,
+                        rgba(102,126,234,0.88),
+                        rgba(118,75,162,0.88)
+                    ),
+                    url("bg-mobile.gif");
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+            }
+        }
+
+        .page { 
+            display: none; 
+            max-width: 400px; 
+            width: 100%; 
+            text-align: center; 
+            background: rgba(0,0,0,0.25);
+            padding: 35px 30px;
+            border-radius: 24px;
+            backdrop-filter: blur(14px);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.45);
+        }
+
         .page.active { display: block; }
+
+        /* Multicolored Title */
+        .app-title {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            -webkit-text-stroke: 1.5px rgba(0,0,0,0.6);
+            text-shadow:
+                0 3px 8px rgba(0,0,0,0.55),
+                0 0 2px rgba(0,0,0,0.6);
+        }
+
+        .app-title span:nth-child(1){color:#ff5252;}
+        .app-title span:nth-child(2){color:#ff9800;}
+        .app-title span:nth-child(3){color:#ffeb3b;}
+        .app-title span:nth-child(4){color:#4caf50;}
+        .app-title span:nth-child(5){color:#00bcd4;}
+        .app-title span:nth-child(6){color:#2196f3;}
+        .app-title span:nth-child(7){color:#673ab7;}
+
+        .app-title span:nth-child(9){color:#e91e63;}
+        .app-title span:nth-child(10){color:#ff9800;}
+        .app-title span:nth-child(11){color:#4caf50;}
+        .app-title span:nth-child(12){color:#03a9f4;}
+        .app-title span:nth-child(13){color:#ffc107;}
+        .app-title span:nth-child(14){color:#ff5722;}
+        .app-title span:nth-child(15){color:#8bc34a;}
+
+        .app-title span:nth-child(17){color:#00e5ff;}
+        .app-title span:nth-child(18){color:#ff4081;}
+        .app-title span:nth-child(19){color:#7c4dff;}
+
         input, button { 
             width: 100%; 
             padding: 15px; 
             margin: 10px 0; 
             border: none; 
-            border-radius: 12px; 
+            border-radius: 14px; 
             font-size: 16px; 
             box-sizing: border-box; 
         }
-        input { background: rgba(255,255,255,0.95); color: #333; }
-        button { background: linear-gradient(45deg, #4CAF50, #45a049); color: white; cursor: pointer; font-weight: 600; }
-        button:hover { transform: translateY(-1px); box-shadow: 0 5px 15px rgba(76,175,80,0.4); }
-        button:active { transform: translateY(0); }
-        #contactsList { text-align: left; max-height: 350px; overflow-y: auto; margin-top: 20px; }
-        .contact { 
-            padding: 15px; 
-            background: rgba(255,255,255,0.15); 
-            margin: 8px 0; 
-            border-radius: 12px; 
+
+        input { 
+            background: rgba(255,255,255,0.95); 
+            color: #333; 
+        }
+
+        button { 
+            background: linear-gradient(45deg, #4CAF50, #45a049); 
+            color: white; 
             cursor: pointer; 
-            transition: all 0.2s; 
-        }
-        .contact:hover { background: rgba(255,255,255,0.25); transform: translateX(5px); }
-        .contact.online { border-left: 5px solid #4CAF50; background: rgba(76,175,80,0.2); }
-        .contact.offline { border-left: 5px solid #f44336; }
-        .contact-header { font-weight: 600; font-size: 16px; }
-        .contact-number { font-size: 14px; opacity: 0.9; }
-        #calling { 
-            background: rgba(0,0,0,0.95); 
-            position: fixed; 
-            top: 0; left: 0; 
-            width: 100%; height: 100%; 
-            display: none; 
-            align-items: center; 
-            justify-content: center; 
-            z-index: 1000; 
-        }
-        #videoCall { 
-            display: none; 
-            position: relative; 
-            height: 100vh; 
-            background: #000; 
-            text-align: center; 
-            padding: 0; 
-            margin: 0; 
-        }
-        #localVideo { 
-            width: 140px; 
-            height: 190px; 
-            border-radius: 18px; 
-            position: absolute; 
-            top: 25px; 
-            right: 25px; 
-            z-index: 10;
-            border: 3px solid rgba(255,255,255,0.3);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.6);
-        }
-        #remoteVideo { 
-            width: 100%; 
-            height: 100vh; 
-            object-fit: cover;
-        }
-        #callContactName { 
-            position: absolute; 
-            top: 25px; 
-            left: 25px; 
-            color: white; 
-            font-size: 26px; 
-            font-weight: 700;
-            margin: 0; 
-            text-shadow: 2px 2px 8px rgba(0,0,0,0.9);
-            z-index: 15;
-        }
-        #callStatus { 
-            position: absolute; 
-            top: 62px; 
-            left: 25px; 
-            color: #4CAF50; 
-            font-size: 16px; 
-            font-weight: 600;
-            margin: 0;
-            text-shadow: 1px 1px 4px rgba(0,0,0,0.9);
-            z-index: 15;
-        }
-        #endCall { 
-            position: absolute; 
-            bottom: 50px; 
-            left: 50%; 
-            transform: translateX(-50%); 
-            background: linear-gradient(45deg, #f44336, #d32f2f); 
-            color: white; 
-            padding: 20px 45px; 
-            font-size: 20px; 
             font-weight: 700; 
-            border: none; 
-            border-radius: 50px; 
-            cursor: pointer; 
-            box-shadow: 0 10px 30px rgba(244,67,54,0.5);
-            z-index: 20;
-            min-width: 160px;
+            transition: all 0.2s ease;
         }
-        #endCall:hover { 
-            background: linear-gradient(45deg, #d32f2f, #b71c1c); 
-            transform: translateX(-50%) translateY(-3px);
-            box-shadow: 0 15px 35px rgba(244,67,54,0.7);
+
+        button:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 8px 20px rgba(76,175,80,0.45); 
         }
+
+        #calling {
+            background: rgba(0,0,0,0.95);
+            position: fixed;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
         #callingPopup {
             background: rgba(20,20,20,0.98);
             padding: 50px 40px;
@@ -136,66 +139,95 @@
             box-shadow: 0 15px 50px rgba(0,0,0,0.8);
             backdrop-filter: blur(20px);
         }
-        #callingPopup h2 { margin: 0 0 10px 0; font-size: 28px; }
-        .ios-instructions { 
-            background: white !important; 
-            color: black !important; 
-            border-radius: 15px; 
-            padding: 25px; 
-            margin: 20px 0; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+
+        #videoCall {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: #000;
         }
-        .ios-instructions h3 { color: #333; margin-top: 0; }
-        .ios-instructions p { margin: 10px 0; line-height: 1.5; }
-        #qrCanvas { border: 2px solid #ddd; border-radius: 10px; }
+
+        #remoteVideo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        #localVideo {
+            width: 140px;
+            height: 190px;
+            border-radius: 18px;
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            border: 3px solid rgba(255,255,255,0.3);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.6);
+        }
+
+        #endCall {
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(45deg, #f44336, #d32f2f);
+            padding: 20px 45px;
+            border-radius: 50px;
+            font-size: 20px;
+            font-weight: 800;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(244,67,54,0.6);
+        }
     </style>
 </head>
 
 <body>
-    <!-- Page 1: Signup -->
+
+    <!-- Page 1 -->
     <div id="signup" class="page active">
-        <h2>🎥 Video Vercel App</h2>
-        <p style="opacity: 0.9; margin-bottom: 30px;">Secure E2E Video Calls</p>
+        <h2 class="app-title">
+            <span>C</span><span>a</span><span>m</span><span>c</span><span>h</span><span>a</span><span>t</span>
+            <span>&nbsp;</span>
+            <span>N</span><span>e</span><span>t</span><span>l</span><span>i</span><span>f</span><span>y</span>
+            <span>&nbsp;</span>
+            <span>A</span><span>p</span><span>p</span>
+        </h2>
+
+        <p style="opacity:0.9;margin-bottom:30px;">Secure E2E Video Calls</p>
+
         <input type="text" id="nickname" placeholder="Your nickname" required>
         <input type="tel" id="phone" placeholder="Phone number" required>
         <button onclick="signup()">Continue</button>
     </div>
 
-    <!-- Page 2: Main -->
+    <!-- Page 2 -->
     <div id="main" class="page">
-        <h2>Hi, <span id="userNick"></span>! 👋</h2>
+        <h2>Hi, <span id="userNick"></span> 👋</h2>
         <p>Enable contacts for fast video calling?</p>
-        <button onclick="requestContacts()" style="background: linear-gradient(45deg, #2196F3, #1976D2);">
+        <button onclick="requestContacts()" style="background:linear-gradient(45deg,#2196F3,#1976D2)">
             🔒 Allow Contacts Access
         </button>
-        <div id="searchSection" style="display:none;">
-            <input type="text" id="search" placeholder="Search contacts to call..." oninput="filterContacts()">
-            <div id="contactsList"></div>
-        </div>
-        <input type="file" id="contactsFile" style="display:none;">
     </div>
 
-    <!-- Page 3: Calling -->
+    <!-- Page 3 -->
     <div id="calling" class="page">
         <div id="callingPopup">
             <h2>📞 Calling <span id="callingContact"></span></h2>
-            <div style="font-size: 48px; margin: 30px 0;">🔄</div>
-            <p style="font-size: 18px; opacity: 0.8;">Ringing...</p>
+            <div style="font-size:48px;margin:30px 0;">🔄</div>
+            <p style="opacity:0.8;">Ringing...</p>
         </div>
     </div>
 
-    <!-- Page 4: Video Call -->
-    <div id="videoCall" class="page">
-        <h3 id="callContactName"></h3>
-        <p id="callStatus"></p>
+    <!-- Page 4 -->
+    <div id="videoCall">
         <video id="remoteVideo" autoplay loop muted playsinline></video>
         <video id="localVideo" autoplay muted playsinline></video>
         <button id="endCall" onclick="endCall()">End Call</button>
     </div>
 
-    <!-- JS unchanged -->
     <script>
-        /* your existing script exactly as provided */
+        /* your existing JS stays exactly the same */
     </script>
+
 </body>
 </html>
